@@ -2,7 +2,9 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+      name: 'azure self-hosted'
+      demands:
+      - Agent.Name -equals vm-agent-02
 
 variables:
   imageName: azure-pipelines-canary-k8s
@@ -11,9 +13,9 @@ steps:
 - task: Docker@2
   displayName: Build and push image
   inputs:
-    containerRegistry: acrads.azurecr.io #replace with name of your Docker registry service connection
+    containerRegistry: azure-pipelines-canary-k8s-acr #replace with name of your Docker registry service connection
     repository: $(imageName)
     command: buildAndPush
     Dockerfile: app/Dockerfile
     tags: |
-      $(Build.BuildId)
+      acrads.azurecr.io/azure-pipelines-canary-k8s-acr:$(Build.BuildId)
