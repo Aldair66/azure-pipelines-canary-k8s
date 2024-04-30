@@ -2,7 +2,9 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+      name: 'azure self-hosted'
+      demands:
+      - Agent.Name -equals vm-agent-02
 
 variables:
   imageName: azure-pipelines-canary-k8s
